@@ -1,0 +1,40 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+  {# 1. Hiển thị lỗi nếu đăng nhập sai #}
+  {% if form.errors %}
+    <p>Tên đăng nhập và mật khẩu của bạn không khớp. Vui lòng thử lại.</p>
+  {% endif %}
+
+  {# 2. Hiển thị thông báo nếu người dùng bị chuyển hướng đến đây #}
+  {% if next %}
+    {% if user.is_authenticated %}
+      <p>Tài khoản của bạn không có quyền truy cập trang này. Vui lòng đăng nhập bằng tài khoản có quyền.</p>
+    {% else %}
+      <p>Vui lòng đăng nhập để xem trang này.</p>
+    {% endif %}
+  {% endif %}
+
+  {# 3. Biểu mẫu đăng nhập #}
+  <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <table>
+      <tr>
+        <td>{{ form.username.label_tag }}</td>
+        <td>{{ form.username }}</td>
+      </tr>
+      <tr>
+        <td>{{ form.password.label_tag }}</td>
+        <td>{{ form.password }}</td>
+      </tr>
+    </table>
+
+    <input type="submit" value="login" />
+    <input type="hidden" name="next" value="{{ next }}" />
+  </form>
+
+  {# 4. Link quên mật khẩu #}
+  <p><a href="{% url 'password_reset' %}">Quên mật khẩu?</a></p>
+
+{% endblock %}
