@@ -1,0 +1,29 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  {% if validlink %}
+    <p>Vui lòng nhập (và xác nhận) mật khẩu mới của bạn.</p>
+    <form action="" method="post">
+      {% csrf_token %}
+      <table>
+        <tr>
+          <td>{{ form.new_password1.errors }}
+              <label for="id_new_password1">Mật khẩu mới:</label></td>
+          <td>{{ form.new_password1 }}</td>
+        </tr>
+<tr>
+          <td>{{ form.new_password2.errors }}
+              <label for="id_new_password2">Xác nhận mật khẩu:</label></td>
+          <td>{{ form.new_password2 }}</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><input type="submit" value="Change my password"></td>
+        </tr>
+      </table>
+    </form>
+  {% else %}
+    <h1>Đặt lại mật khẩu thất bại</h1>
+    <p>Liên kết đặt lại mật khẩu không hợp lệ, có thể là do nó đã được sử dụng. Vui lòng yêu cầu một liên kết đặt lại mật khẩu mới.</p>
+  {% endif %}
+{% endblock %}
